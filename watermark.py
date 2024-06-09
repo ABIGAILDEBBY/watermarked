@@ -1,8 +1,8 @@
 from PIL import ImageDraw, ImageFont
 
 from config import (font_path, font_size,  # Import configuration
-                    watermark_color_1, watermark_color_2,
-                    watermark_opacity, watermark_text)
+                    watermark_color_1, watermark_color_2, watermark_opacity,
+                    watermark_text)
 from utils import convert_to_rgba, get_text_size
 
 
