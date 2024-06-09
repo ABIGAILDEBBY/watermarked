@@ -7,7 +7,23 @@ from utils import convert_to_rgba, get_text_size
 
 
 class Watermark:
+    """
+    Class representing a watermark with properties and drawing functionality.
+
+    This class defines a watermark object with properties like text, colors,
+    opacity, font path, and font size. It also includes a method
+    `draw_circle_watermark` that takes a PIL image object and adds a circular
+    watermark with the configured text centered on the image.
+    """
+
     def __init__(self):
+        """
+        Initialize a Watermark object with properties from configuration.
+
+        This constructor retrieves watermark properties (text, colors, opacity,
+        font path, and font size) from the configuration file (`config.py`).
+        It also calculates the alpha value based on the opacity for transparency.
+        """
         self.text = watermark_text
         self.color_1 = watermark_color_1
         self.color_2 = watermark_color_2
@@ -16,10 +32,30 @@ class Watermark:
         self.font_size = font_size
         self.alpha = int(255 * (self.opacity / 100))
 
-        # self.watermark_navy_blue = watermark_navy_blue
+        # self.watermark_navy_blue = watermark_navy_blue (commented out)
 
     def draw_circle_watermark(self, image):
-        """Draws a circular watermark with text centered on the image."""
+        """
+        Draws a circular watermark with text centered on the provided image.
+
+        This method takes a PIL Image object as input. It ensures the image
+        has an alpha channel for transparency using `convert_to_rgba` from the
+        `utils.py` module. Then, it creates an ImageDraw object and calculates
+        the width and height of the watermark text using `get_text_size` from
+        `utils.py`.
+
+        The method calculates the radius and center coordinates for the circular
+        watermark based on the text size and image dimensions. It then draws
+        a filled circle with the outline color and the text centered inside the
+        circle using the specified font and colors (with transparency applied
+        based on the alpha value).
+
+        Args:
+            image (PIL.Image): The image object to add the watermark to.
+
+        Returns:
+            PIL.Image: The modified image with the watermark drawn on it.
+        """
         image = convert_to_rgba(image)  # Ensure image has alpha channel
 
         draw = ImageDraw.Draw(image)

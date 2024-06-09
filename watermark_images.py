@@ -20,7 +20,37 @@ font_path = "/Users/abigailwoolley/PersonalProjects/TechArtGenius/fonts/Bighome.
 
 
 def add_watermark(image_path):
-    """Adds watermark to an image, centered horizontally and vertically."""
+    """
+    Adds a centered text watermark to an image with adjustable transparency.
+
+    This function opens an image using PIL's `Image.open` function,
+    ensures it has an alpha channel for transparency by converting it
+    to 'RGBA' mode. It then creates a new transparent RGBA image as the
+    watermark canvas.
+
+    The function calculates the dimensions (width and height) of the
+    watermark text using `draw.textsize` and the provided font and size.
+    It then calculates the center coordinates for placing the watermark
+    text horizontally and vertically centered on the original image.
+
+    Using the `ImageDraw` object on the watermark canvas, the function
+    draws the watermark text twice with a slight difference:
+     - The first layer uses the `watermark_color_2` (usually a lighter shade)
+     - The second layer uses the `watermark_color_1` (usually the main color)
+
+    This creates a double-layered text effect for the watermark.
+
+    Finally, the watermark image is composited onto the original image
+    using `Image.alpha_composite`. The transparency level of the combined
+    image is set based on the `watermark_opacity` value using calculations
+    and conversion to the 'L' (luminance) mode. The image is then converted
+    to 'RGB' mode (to avoid transparency errors when saving as JPEG)
+    and saved back to the original image path.
+
+    Args:
+        image_path (str): The path to the image file to be watermarked.
+    """
+
     image = Image.open(image_path).convert(
         "RGBA")  # Open image with alpha channel
     watermark = Image.new("RGBA", image.size, (0, 0, 0, 0)
